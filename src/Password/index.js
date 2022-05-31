@@ -5,9 +5,9 @@ import ListElements from '../ListElements'
 import './index.css'
 
 const initialList = []
-
 class Password extends Component {
   state = {
+    requiredList: initialList,
     id: 1,
     webSite: '',
     userName: '',
@@ -27,7 +27,7 @@ class Password extends Component {
   }
 
   submitForm = event => {
-    event.preventdefault()
+    event.preventDefault()
   }
 
   addToList = () => {
@@ -37,6 +37,9 @@ class Password extends Component {
   }
 
   render() {
+    const {requiredList} = this.state
+    console.log(requiredList)
+    const x = requiredList.length
     return (
       <div>
         <img
@@ -105,7 +108,10 @@ class Password extends Component {
         </div>
         <div className="container2">
           <div className="hedderContainer">
-            <p>Your passwords</p>
+            <div className="counter">
+              <p>Your passwords </p>
+              <p className="number">{x}</p>
+            </div>
             <div className="textbox">
               <img
                 className="icon"
@@ -117,14 +123,16 @@ class Password extends Component {
           </div>
           <hr />
           <div className="checkboxContainer">
-            <input type="checkbox" />
-            <p>show password</p>
+            <input id="check" className="checkboxx" type="checkbox" />
+            <label htmlFor="check">Show Password</label>
           </div>
 
-          {initialList.length > 0 ? (
-            <div>
-              <ListElements listGen={initialList} />
-            </div>
+          {requiredList.length > 0 ? (
+            <ul className="listt">
+              {requiredList.map(each => (
+                <ListElements listGen={each} key={each.id} />
+              ))}
+            </ul>
           ) : (
             <div className="nopass">
               <img
